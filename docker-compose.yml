@@ -1,4 +1,10 @@
 services:
+    app:
+        image: fastapi-demo:latest
+        ports:
+            - "8080:8080"
+        networks:
+            fastapi-demo-net:
     db:
         image: postgres:13.2-alpine
         restart: always
