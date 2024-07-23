@@ -1,0 +1,18 @@
+services:
+    db:
+        image: postgres:13.2-alpine
+        restart: always
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 1234
+            PGDATA: /var/lib/postgresql/data
+        volumes:
+            - ./db-data:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            fastapi-demo-net:
+networks:
+    fastapi-demo-net:
+        name: fastapi-demo-net
