@@ -13,8 +13,6 @@ class UserDAO:
         # user_data = user.dict()
         # new_user = User(**user_data)
         self.db.add(user)
-        await self.db.commit()
-        await self.db.refresh(user)
         return user
 
     async def get_user_by_id(self, id: int) -> User:

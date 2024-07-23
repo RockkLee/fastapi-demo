@@ -24,15 +24,22 @@ class TestUserDAO(IsolatedAsyncioTestCase):
         await self.engine.dispose()  # Close all connections in the connection pool
 
     async def test_create_user(self):
+        # delete the test data if it exists
         sql_delete = delete(User).where(User.username == "aaa123")
         await self.db.execute(sql_delete)
         await self.db.commit()
-
+        # create
         user_dao = UserDAO(self.db)
         new_user = await user_dao.create_user(
             User(username="aaa123", password="bbb456", create_date=datetime.now())
         )
         self.assertNotEqual(new_user, None)
+        await self.db.execute(sql_delete)
+        await self.db.commit()
+        # delete the test data
+        sql_delete = delete(User).where(User.username == "aaa123")
+        await self.db.execute(sql_delete)
+        await self.db.commit()
 
     async def test_get_user_by_id(self):
         user_dao = UserDAO(self.db)
